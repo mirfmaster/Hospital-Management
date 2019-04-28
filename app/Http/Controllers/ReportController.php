@@ -5,85 +5,41 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Kamar;
 use App\Model\RawatInap;
+use Illuminate\Support\Carbon;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $kamar=Kamar::all();
-        $data=RawatInap::with('dokter')->with('kamar')->get();
+        $data=RawatInap::with('dokter')->with('kamar')->orderBy('tanggal_masuk','desc')->get();
         // dd($data);
         return view('dashboard.reports.index',compact('kamar','data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function filter(Request $request)
     {
-        //
-    }
+        $kamar=Kamar::all();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $tanggal['start']=Carbon::parse(strtotime($request->all()['start']));
+        $tanggal['end']=Carbon::parse(strtotime($request->all()['end']));
+        $request->merge($tanggal);
+        $request->validate([
+            'start' => 'required|date',
+            'end' => 'required|date',
+            'kamar_id' => 'required'
+        ]);
+        $start=$tanggal['start']->format('Y-m-d');
+        $end=$tanggal['end']->format('Y-m-d');
+        $data=RawatInap::with('dokter')->with('kamar')
+        ->whereBetween('tanggal_masuk',[$start, $end])
+        // ->where('tanggal_masuk','>=',$request->start)
+        // ->where('tanggal_keluar','<=',$request->end)
+        ->where('kamar_id',$request->kamar_id)
+        ->orderBy('tanggal_masuk','desc')
+        ->get();
+        // dd($data,$request->start,$request->end,$request->kamar_id);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('dashboard.reports.index',compact('kamar','data'));
     }
 }
