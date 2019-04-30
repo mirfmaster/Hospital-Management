@@ -36,6 +36,8 @@ class DokterController extends Controller
      */
     public function store(Request $request)
     {
+        $nomortelepon['nomor_telepon']=str_replace(['(',')','-'],"",$request->nomor_telepon);
+        $request->merge($nomortelepon);
         $request->validate([
             'nama_dokter' => "required|max:25",
             'alamat' => 'required|max:255',

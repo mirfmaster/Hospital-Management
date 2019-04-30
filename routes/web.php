@@ -25,6 +25,8 @@ Route::group(['prefix' => 'dashboard',  'middleware' => 'auth', 'as' => 'dashboa
     Route::get('rawatinap/selesai/{no_rm}','RawatInapController@selesai')->name('rawatinap.selesai');
     Route::resource('rawatinap', 'RawatInapController');
     Route::post('reports/filter','ReportController@filter');
+    Route::get('reports/stream','ReportController@stream');
+    Route::get('reports/download','ReportController@download');
     Route::resource('reports','ReportController');
 });
 

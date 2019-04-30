@@ -70,8 +70,8 @@
         </tbody>
     </table>
     <div class="pull-right m-t-35 m-r-10">
-        <a href="" class="btn btn-wave btn-success m-r-10">Print</a>
-        <a href="" class="btn btn-wave btn-primary">Save</a>
+        <a href="{{url('dashboard/reports/stream')}}" class="btn btn-wave btn-success m-r-10">Print</a>
+        <a href="{{url('dashboard/reports/download')}}" class="btn btn-wave btn-primary">Save</a>
     </div>
 
 </div>
