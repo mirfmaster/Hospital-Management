@@ -16,13 +16,12 @@ Route::get('/', function () {
 })->middleware(['guest']);
 
 Route::group(['prefix' => 'dashboard',  'middleware' => 'auth', 'as' => 'dashboard.'], function () {
-    Route::get('/', function () {
-        return view('index');
-    })->name('index');
+    Route::get('/', 'RawatInapController@charts')->name('index');
 
     Route::resource('kamar', 'KamarController');
     Route::resource('dokter', 'DokterController');
     Route::get('rawatinap/selesai/{no_rm}','RawatInapController@selesai')->name('rawatinap.selesai');
+    Route::get('charts', 'RawatInapController@charts');
     Route::resource('rawatinap', 'RawatInapController');
     Route::post('reports/filter','ReportController@filter');
     Route::get('reports/stream','ReportController@stream');

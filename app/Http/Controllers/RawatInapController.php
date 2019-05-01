@@ -141,4 +141,42 @@ class RawatInapController extends Controller
             return redirect()->route('dashboard.rawatinap.index')->with('info', 'Rawat Inap sudah selesai, jangan lupa ucapkan terima kasih!');
         }
     }
+
+    public function charts()
+    {
+        $grouping = RawatInap::all()->groupBy('diagnosa_utama');
+        foreach($grouping as $k => $v){
+            $labels[]= $k;
+        }
+        $jumlah = RawatInap::selectRaw('count(*) as jumlah')->groupBy('diagnosa_utama')->get();
+        foreach($jumlah as $key => $value){
+            $counts[]=$value->jumlah;
+        }
+
+        $datasets[] = [
+            "label" => $labels,
+            'backgroundColor' => ['rgba(54, 162, 235)','rgba(200, 162, 235)','rgba(200, 162, 235)'],
+            'data' => $counts
+        ];
+        // dd($datasets);
+        $chartjs = app()->chartjs
+         ->name('barChartTest')
+         ->type('bar')
+         ->size(['width' => 400, 'height' => 200])
+         ->labels($labels)
+         ->datasets($datasets)
+         ->optionsRaw("{
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }");
+         return view('index',compact('chartjs'));
+    }
 }
