@@ -23,7 +23,7 @@
             <h2 class="card-inside-title">Ruang Perawatan</h2>
             <div class="btn-group bootstrap-select form-control show-tick">
                 <select name="kamar_id" class="form-control show-tick" data-live-search="true">
-                    <option disabled selected>Ruang Perawatan</option>
+                    <option disabled>Ruang Perawatan</option>
                     @forelse($kamar as $ruang)
                     <option value="{{$ruang->kamar_id}}">{{$ruang->ruang_perawatan}}</option>
                     @empty

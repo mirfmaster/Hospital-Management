@@ -145,12 +145,14 @@ class RawatInapController extends Controller
     public function charts()
     {
         $grouping = RawatInap::all()->groupBy('diagnosa_utama');
+        $labels = [];
         foreach($grouping as $k => $v){
-            $labels[]= $k;
+            $labels = $k;
         }
         $jumlah = RawatInap::selectRaw('count(*) as jumlah')->groupBy('diagnosa_utama')->get();
+        $counts = [];
         foreach($jumlah as $key => $value){
-            $counts[]=$value->jumlah;
+            $counts = $value->jumlah;
         }
 
         $datasets[] = [

@@ -1,6 +1,7 @@
 @extends('layouts.container')
 
 @section('header','Rawat Inap Page')
+@section('title', 'Hospital Management | Rawat Inap')
 @section('content')
 @include('components.loader')
 <div class="table-responsive">

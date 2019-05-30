@@ -184,7 +184,7 @@
 <script>
 //Bootstrap datepicker plugin
 $('.bs_datepicker_component_container').datepicker({
-    format: 'dd/mm/yyyy',
+    format: 'yyyy-mm-dd',
     autoclose: true,
     container: '#bs_datepicker_component_container'
 });
