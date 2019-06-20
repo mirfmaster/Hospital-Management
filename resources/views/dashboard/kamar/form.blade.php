@@ -1,4 +1,5 @@
 @extends('layouts.container')
+@section('header','Form Input Kamar')
 @section('content')
 <h4>Form Input Kamar</h4>
 <div class="row clearfix">

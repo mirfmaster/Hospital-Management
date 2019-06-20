@@ -10,6 +10,14 @@
             <form class="form-horizontal form-label-left" method="POST" action="{{route('dashboard.rawatinap.store')}}">
         @endif
         @csrf
+            <div class="col-sm-12">
+                <div class="form-group form-float">
+                    <div class="form-line">
+                        <input type="text" class="form-control" value="{{isset($data) ? $data->no_rm:null}}" name="no_rm">
+                        <label class="form-label">No RM</label>
+                    </div>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <div class="form-group form-float">
                     <div class="form-line">
@@ -119,17 +127,37 @@
             </div>
             <div class="col-sm-12">
                 <div class="form-group form-float">
-                    <div class="form-line">
-                        <input type="text" class="form-control" value="{{isset($data) ? $data->diagnosa_utama:null}}" name="diagnosa_utama">
-                        <label class="form-label">Diagnosa Utama</label>
+                    <div class="btn-group bootstrap-select form-control show-tick">
+                        <select name="diagnosa_utama" class="form-control show-tick" data-live-search="true">
+                            <option disabled selected>Diagnosa Utama</option>
+                            @forelse($diagnosa as $dataDiagnosa)
+                                @if(isset($data))
+                                    @if($data->id==$dataDiagnosa->id)
+                                        <option value="{{$dataDiagnosa->id}}" selected>{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
+                                    @endif
+                                @endif
+                                <option value="{{$dataDiagnosa->id}}">{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
+                            @empty
+                            @endforelse
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group form-float">
-                    <div class="form-line">
-                        <input type="text" class="form-control" value="{{isset($data) ? $data->diagnosa_kedua:null}}" name="diagnosa_kedua">
-                        <label class="form-label">Diagnosa Kedua</label>
+                    <div class="btn-group bootstrap-select form-control show-tick">
+                        <select name="diagnosa_kedua" class="form-control show-tick" data-live-search="true">
+                            <option disabled selected>Diagnosa Kedua</option>
+                            @forelse($diagnosa as $dataDiagnosa)
+                                @if(isset($data))
+                                    @if($data->id==$dataDiagnosa->id)
+                                        <option value="{{$dataDiagnosa->id}}" selected>{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
+                                    @endif
+                                @endif
+                                <option value="{{$dataDiagnosa->id}}">{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
+                            @empty
+                            @endforelse
+                        </select>
                     </div>
                 </div>
             </div>

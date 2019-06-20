@@ -1,7 +1,6 @@
 @extends('layouts.container')
 
-@section('header','Rawat Inap Page')
-@section('title', 'Hospital Management | Rawat Inap')
+@section('header','Diagnose Page')
 @section('content')
 @include('components.loader')
 <div class="table-responsive">
@@ -12,28 +11,26 @@
                     <thead>
                         <tr role="row">
                             <th>No</th>
-                            <th>Nama Pasien</th>
-                            <th>Tanggal Masuk</th>
-                            <th>Ruang Perawatan</th>
-                            <th>Nama Dokter</th>
+                            <th>Kode Diagnosa</th>
+                            <th>Diagnosa</th>
                             <th width="70">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($data as $rw)
+                        @forelse($data as $diagnosa)
                             <tr valign="middle">
                                 <td></td>
-                                <td>{{$rw->nama_pasien}}</td>
-                                <td>{{$rw->tanggal_masuk}}</td>
-                                <td>{{$rw->kamar->ruang_perawatan}}</td>
-                                <td>{{$rw->dokter->nama_dokter}}</td>
+                                <td>{{$diagnosa->kode_diagnosa}}</td>
+                                <td>{{$diagnosa->diagnosa}}</td>
                                 <td>
-                                    @if($rw->status!=1)
-                                        <a href="{{route('dashboard.rawatinap.edit',$rw->id)}}" title="Edit Data" class="btn btn-warning btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">edit</i></a>
-                                        <a href="{{route('dashboard.rawatinap.selesai',$rw->id)}}" title="Selesai" class="btn btn-primary btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">done</i></a>
-                                    @else
-                                        <a class="btn btn-info">Sudah selesai :)</a>
-                                    @endif
+                                    <a href="{{route('dashboard.diagnosa.edit',$diagnosa->id)}}" title="Edit Data" class="btn btn-warning btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">edit</i></a>
+                                    <form action="{{route('dashboard.diagnosa.destroy',$diagnosa->id)}}" method="post" style="float:left;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn bg-red btn-circle waves-effect waves-circle waves-float" title="Delete data">
+                                            <i class="material-icons">delete</i>
+                                        </button>
+                                    </form> 
                                 </td>
                             </tr>
                         @empty
@@ -43,7 +40,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <!-- <a href="{{route('dashboard.rawatinap.create')}}" class="btn bg-light-blue waves-effect" style="margin:5px 0;">Tambahkan data</a> -->
+                <a href="{{route('dashboard.diagnosa.create')}}" class="btn bg-light-blue waves-effect" style="margin:5px 0;">Tambahkan Diagnosa</a>
             </div>
         </div>
     </div>

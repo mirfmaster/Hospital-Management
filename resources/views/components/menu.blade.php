@@ -21,9 +21,21 @@
             </a>
         </li>
         <li>
+            <a href="{{url('dashboard/diagnosa/')}}">
+                <i class="material-icons">note_add</i>
+                <span>Master Diagnosa</span>
+            </a>
+        </li>
+        <li>
             <a href="{{url('dashboard/rawatinap/')}}">
-                <i class="material-icons">local_hospital</i>
+                <i class="material-icons">tab</i>
                 <span>Data Rawat Inap</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{url('dashboard/rawatinap/create')}}">
+                <i class="material-icons">move_to_inbox</i>
+                <span>Register Rawat Inap</span>
             </a>
         </li>
         <li>
@@ -31,23 +43,6 @@
                 <i class="material-icons">assessment</i>
                 <span>Laporan</span>
             </a>
-        </li>
-        <li>
-            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                <i class="material-icons">view_list</i>
-                <span>Tables</span>
-            </a>
-            <ul class="ml-menu">
-                <li>
-                    <a href="pages/tables/normal-tables.html" class=" waves-effect waves-block">Normal Tables</a>
-                </li>
-                <li>
-                    <a href="pages/tables/jquery-datatable.html" class=" waves-effect waves-block">Jquery Datatables</a>
-                </li>
-                <li>
-                    <a href="pages/tables/editable-table.html" class=" waves-effect waves-block">Editable Tables</a>
-                </li>
-            </ul>
         </li>
     </ul>
 </div>

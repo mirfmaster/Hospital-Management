@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnTimestampToRawatinap extends Migration
+class CreateDiagnosesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddColumnTimestampToRawatinap extends Migration
      */
     public function up()
     {
-        Schema::table('rawat_inaps', function (Blueprint $table) {
+        Schema::create('diagnoses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('no_rm');
-            $table->timestamp('created_at');
-
+            $table->string('kode_diagnosa');
+            $table->string('diagnosa');
+            $table->timestamps();
         });
     }
 
@@ -28,10 +28,6 @@ class AddColumnTimestampToRawatinap extends Migration
      */
     public function down()
     {
-        Schema::table('rawat_inaps', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('no_rm');
-            $table->timestamp('created_at');
-        });
+        Schema::dropIfExists('diagnoses');
     }
 }

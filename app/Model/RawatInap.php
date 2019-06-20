@@ -8,8 +8,8 @@ use Carbon\Carbon;
 class RawatInap extends Model
 {
     protected $table="rawat_inaps";
-    protected $primaryKey='no_rm';
     protected $fillable=[
+        'no_rm',
         'nama_pasien',
         'dokter_id',
         'kamar_id',

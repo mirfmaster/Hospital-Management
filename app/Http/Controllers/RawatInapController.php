@@ -6,6 +6,7 @@ use App\Model\RawatInap;
 use Illuminate\Http\Request;
 use App\Model\Kamar;
 use App\Model\Dokter;
+use App\Model\Diagnose;
 use Illuminate\Support\Carbon;
 
 class RawatInapController extends Controller
@@ -18,7 +19,6 @@ class RawatInapController extends Controller
     public function index()
     {
         $data=RawatInap::with('dokter')->with('kamar')->get();
-        // dd($data);
         return view('dashboard.rawatinap.index',compact('data'));
     }
 
@@ -31,8 +31,8 @@ class RawatInapController extends Controller
     {
         $kamar=Kamar::all(['kamar_id','ruang_perawatan']);
         $dokter=Dokter::all(['dokter_id','nama_dokter']);
-        // dd($kamar,$dokter);
-        return view('dashboard.rawatinap.form',compact('kamar','dokter'));
+        $diagnosa=Diagnose::all(['id','kode_diagnosa' ,'diagnosa']);
+        return view('dashboard.rawatinap.form',compact('kamar','dokter', 'diagnosa'));
     }
 
     /**
@@ -61,7 +61,7 @@ class RawatInapController extends Controller
             'lama_hari_rawat'       => "sometimes|max:3",
             'diagnosa_utama'        => "required|max:50",
             'diagnosa_kedua'        => "max:50",
-            'nama_operasi_1'        => "required|max:25",
+            'nama_operasi_1'        => "max:50",
             'nama_operasi_2'        => "max:50",
             'status_keadaan_keluar' => "required"
         ]); 
@@ -91,8 +91,10 @@ class RawatInapController extends Controller
     {
         $kamar = Kamar::all(['kamar_id', 'ruang_perawatan']);
         $dokter = Dokter::all(['dokter_id','nama_dokter']);
-        $data=$rawatInap->find($no_rm)->first();
-        return view('dashboard.rawatinap.form',compact('data','dokter','kamar'));
+        $data=$rawatInap->findOrFail($no_rm);
+        $diagnosa=Diagnose::all(['id','kode_diagnosa' ,'diagnosa']);
+
+        return view('dashboard.rawatinap.form',compact('data','dokter','kamar', 'diagnosa'));
     }
 
     /**
@@ -116,7 +118,7 @@ class RawatInapController extends Controller
             'lama_hari_rawat'       => "sometimes|max:3",
             'diagnosa_utama'        => "required|max:50",
             'diagnosa_kedua'        => "max:50",
-            'nama_operasi_1'        => "required|max:25",
+            'nama_operasi_1'        => "max:50",
             'nama_operasi_2'        => "max:50",
             'status_keadaan_keluar' => "required"
         ]);
@@ -127,7 +129,6 @@ class RawatInapController extends Controller
         $tanggal['tanggal_operasi']=Carbon::parse($request->all()['tanggal_lahir']);
         $request->merge($tanggal);
         $update=$data->update($request->except('_method','_token'));
-        // dd($request->all(),$update);
         if($update){
             return redirect()->route('dashboard.rawatinap.index')->with('success', 'Your request succesfully executed.');
         }
@@ -147,7 +148,7 @@ class RawatInapController extends Controller
         $grouping = RawatInap::all()->groupBy('diagnosa_utama');
         $labels = [];
         foreach($grouping as $k => $v){
-            $labels = $k;
+            $labels[] = $k;
         }
         $jumlah = RawatInap::selectRaw('count(*) as jumlah')->groupBy('diagnosa_utama')->get();
         $counts = [];
@@ -160,7 +161,6 @@ class RawatInapController extends Controller
             'backgroundColor' => ['rgba(54, 162, 235)','rgba(200, 162, 235)','rgba(200, 162, 235)'],
             'data' => $counts
         ];
-        // dd($datasets);
         $chartjs = app()->chartjs
          ->name('barChartTest')
          ->type('bar')

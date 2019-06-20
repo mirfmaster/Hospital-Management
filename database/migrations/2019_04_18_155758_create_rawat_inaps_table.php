@@ -25,8 +25,10 @@ class CreateRawatInapsTable extends Migration
             $table->date('tanggal_masuk');
             $table->date('tanggal_keluar')->nullable();
             $table->string('lama_hari_rawat');
-            $table->string('diagnosa_utama');
-            $table->string('diagnosa_kedua')->nullable();
+            $table->unsignedBigInteger('diagnosa_utama');
+            $table->foreign('diagnosa_utama')->references('id')->on('diagnoses')->onDelete('cascade');
+            $table->unsignedBigInteger('diagnosa_kedua')->nullable();
+            $table->foreign('diagnosa_kedua')->references('id')->on('diagnoses')->onDelete('cascade');
             $table->string('nama_operasi_1');
             $table->string('nama_operasi_2')->nullable();
             $table->date('tanggal_operasi')->nullable();

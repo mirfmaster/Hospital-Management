@@ -20,6 +20,7 @@ Route::group(['prefix' => 'dashboard',  'middleware' => 'auth', 'as' => 'dashboa
 
     Route::resource('kamar', 'KamarController');
     Route::resource('dokter', 'DokterController');
+    Route::resource('diagnosa', 'DiagnoseController');
     Route::get('rawatinap/selesai/{no_rm}','RawatInapController@selesai')->name('rawatinap.selesai');
     Route::get('charts', 'RawatInapController@charts');
     Route::resource('rawatinap', 'RawatInapController');
