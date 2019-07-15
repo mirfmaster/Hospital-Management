@@ -60,7 +60,7 @@
                 <th>{{$rawatInap->tanggal_keluar}}</th>
                 <th>{{$rawatInap->lama_hari_rawat}}</th>
                 <th>{{$rawatInap->kamar->ruang_perawatan}}</th>
-                <th>{{($rawatInap->status==0)?"Masih di rawat":"Rawat Inap sudah selesai"}}</th>
+                <th>{{($rawatInap->selesai==0)?"Masih di rawat":"Rawat Inap sudah selesai"}}</th>
             </tr>
             @empty
             <tr>

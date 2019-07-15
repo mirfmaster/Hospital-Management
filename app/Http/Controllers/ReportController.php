@@ -49,7 +49,6 @@ class ReportController extends Controller
     {
         $dataReports=session()->get('dataReports');
         session()->reflash();
-        // dd($dataReports);
         $pdf = PDF::loadView('dashboard.reports.pdf', compact('dataReports'));
         return $pdf->stream('TALENT Reports.pdf');
     }
@@ -58,7 +57,6 @@ class ReportController extends Controller
     {
         $dataReports=session()->get('dataReports');
         session()->reflash();
-        // dd($dataReports);
         $pdf = PDF::loadView('dashboard.reports.pdf', compact('dataReports'));
         return $pdf->download('TALENT Reports.pdf');
     }

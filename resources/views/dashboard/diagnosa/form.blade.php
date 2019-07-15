@@ -1,7 +1,7 @@
 @extends('layouts.container')
 @section('header','Form Input Diagnosa')
 @section('content')
-<h4>Form Input Kamar</h4>
+<h4>Form Input Diagnosa</h4>
 <div class="row clearfix">
     <div class="col-sm-8">
         @if(isset($data))

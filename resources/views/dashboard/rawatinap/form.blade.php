@@ -4,10 +4,10 @@
 <div class="row clearfix">
     <div class="col-sm-8">
         @if(isset($data))
-            <form class="form-horizontal form-label-left" method="POST" action="{{route('dashboard.rawatinap.update',$data->no_rm)}}">
+            <form class="form-horizontal form-label-left" method="POST" action="{{route('dashboard.rawatinap.update',$data->id)}}">
             @method('PUT')
         @else
-            <form class="form-horizontal form-label-left" method="POST" action="{{route('dashboard.rawatinap.store')}}">
+            <form class="form-horizontal form-label-left" method="POST" action="{{route('dashboard.rawatinap.store')}}" autocomplete="off">
         @endif
         @csrf
             <div class="col-sm-12">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group form-float">
                     <div class="input-group date bs_datepicker_component_container" id="bs_datepicker_component_container" style="margin-bottom:0px;">
                         <div class="form-line">
@@ -69,7 +69,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group form-float" style="margin-bottom:0px;">
                     <div class="input-group date bs_datepicker_component_container" id="bs_datepicker_component_container" style="margin-bottom:0px;">
                         <div class="form-line">
@@ -78,14 +78,6 @@
                         <span class="input-group-addon">
                             <i class="material-icons">date_range</i>
                         </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="form-group form-float">
-                    <div class="form-line">
-                        <input type="number" class="form-control" value="{{isset($data) ? $data->lama_hari_rawat:null}}" name="lama_hari_rawat">
-                        <label class="form-label">Lama Hari Rawat</label>
                     </div>
                 </div>
             </div>
@@ -132,7 +124,7 @@
                             <option disabled selected>Diagnosa Utama</option>
                             @forelse($diagnosa as $dataDiagnosa)
                                 @if(isset($data))
-                                    @if($data->id==$dataDiagnosa->id)
+                                    @if($data->diagnosa_utama==$dataDiagnosa->id)
                                         <option value="{{$dataDiagnosa->id}}" selected>{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
                                     @endif
                                 @endif
@@ -147,10 +139,10 @@
                 <div class="form-group form-float">
                     <div class="btn-group bootstrap-select form-control show-tick">
                         <select name="diagnosa_kedua" class="form-control show-tick" data-live-search="true">
-                            <option disabled selected>Diagnosa Kedua</option>
+                            <option value="" selected>Diagnosa Kedua</option>
                             @forelse($diagnosa as $dataDiagnosa)
                                 @if(isset($data))
-                                    @if($data->id==$dataDiagnosa->id)
+                                    @if($data->diagnosa_kedua==$dataDiagnosa->id)
                                         <option value="{{$dataDiagnosa->id}}" selected>{{$dataDiagnosa->kode_diagnosa." - ".$dataDiagnosa->diagnosa}}</option>
                                     @endif
                                 @endif

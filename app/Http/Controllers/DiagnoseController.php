@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Kamar;
+use App\Model\Dokter;
 use App\Model\Diagnose;
 use Illuminate\Http\Request;
 
@@ -50,9 +52,9 @@ class DiagnoseController extends Controller
      * @param  \App\Model\Kamar  $kamar
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kamar $diagnose)
+    public function edit(Diagnose $diagnose, $id)
     {
-        $data=$diagnose;
+        $data=$diagnose->findOrFail($id);
         return view('dashboard.diagnosa.form',compact('data'));
     }
 
@@ -63,13 +65,13 @@ class DiagnoseController extends Controller
      * @param  \App\Model\Kamar  $diagnose
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kamar $diagnose)
+    public function update(Request $request, Diagnose $diagnose, $id)
     {
         $request->validate([
             'kode_diagnosa' => "required|max:15",
             'diagnosa' => 'required|max:50',
         ]);
-        $diagnose->update($request->all());
+        $diagnose->findOrFail($id)->update($request->all());
         return redirect()->route('dashboard.diagnosa.index')->with('success', 'Your request succesfully executed.');
     }
 
@@ -79,9 +81,9 @@ class DiagnoseController extends Controller
      * @param  \App\Model\Kamar  $diagnose
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kamar $diagnose)
+    public function destroy(Diagnose $diagnose, $id)
     {
-        $diagnose->delete();
+        $diagnose->findOrFail($id)->delete();
         return redirect()->route('dashboard.diagnosa.index')->with('warning', 'Your request successfully executed');
     }
 }

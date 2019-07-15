@@ -19,6 +19,14 @@ class RawatInapController extends Controller
     public function index()
     {
         $data=RawatInap::with('dokter')->with('kamar')->get();
+
+        foreach($data as $object){
+            $object->status = "Belum Selesai";
+            if($object->selesai == 0){
+                $object->status = "Selesai";
+            }
+        }
+        
         return view('dashboard.rawatinap.index',compact('data'));
     }
 
@@ -58,7 +66,6 @@ class RawatInapController extends Controller
             'jenis_kelamin'         => "required",
             'tanggal_masuk'         => "required",
             'tanggal_keluar'        => "sometimes|date",
-            'lama_hari_rawat'       => "sometimes|max:3",
             'diagnosa_utama'        => "required|max:50",
             'diagnosa_kedua'        => "max:50",
             'nama_operasi_1'        => "max:50",
@@ -115,14 +122,13 @@ class RawatInapController extends Controller
             'jenis_kelamin'         => "required",
             'tanggal_masuk'         => "required",
             'tanggal_keluar'        => "sometimes|date",
-            'lama_hari_rawat'       => "sometimes|max:3",
             'diagnosa_utama'        => "required|max:50",
             'diagnosa_kedua'        => "max:50",
             'nama_operasi_1'        => "max:50",
             'nama_operasi_2'        => "max:50",
             'status_keadaan_keluar' => "required"
         ]);
-        $data=RawatInap::find($no_rm)->first();
+        $data=RawatInap::findOrFail($no_rm)->first();
         $tanggal['tanggal_lahir']=Carbon::parse($request->all()['tanggal_lahir']);
         $tanggal['tanggal_masuk']=Carbon::parse($request->all()['tanggal_masuk']);
         $tanggal['tanggal_keluar']=Carbon::parse($request->all()['tanggal_keluar']);
@@ -136,8 +142,8 @@ class RawatInapController extends Controller
 
     public function selesai($no_rm)
     {
-        $data=RawatInap::find($no_rm)->first();
-        $data->status=1;
+        $data=RawatInap::findOrFail($no_rm);
+        $data->selesai=1;
         if($data->save()){
             return redirect()->route('dashboard.rawatinap.index')->with('info', 'Rawat Inap sudah selesai, jangan lupa ucapkan terima kasih!');
         }
