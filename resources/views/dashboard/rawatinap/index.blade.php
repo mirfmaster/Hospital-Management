@@ -28,7 +28,7 @@
                                 <td>{{$rw->tanggal_masuk}}</td>
                                 <td>{{$rw->kamar->ruang_perawatan}}</td>
                                 <td>{{$rw->dokter->nama_dokter}}</td>
-                                <td>{{$rw->status}}</td>
+                                <td>{{$rw->status_keadaan_keluar}}</td>
                                 <td>
                                     @if($rw->selesai!=1)
                                         <a href="{{route('dashboard.rawatinap.edit',$rw->id)}}" title="Edit Data" class="btn btn-warning btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">edit</i></a>
