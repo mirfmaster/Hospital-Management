@@ -37,4 +37,8 @@ class RawatInap extends Model
         return $this->belongsTo('App\Model\Kamar','kamar_id','kamar_id');
     }
 
+    public function diagnosa(){
+        return $this->belongsTo('App\Model\Diagnose', 'diagnosa_utama');
+    }
+
 }

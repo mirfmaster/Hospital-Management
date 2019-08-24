@@ -18,7 +18,7 @@ class RawatInapController extends Controller
      */
     public function index()
     {
-        $data=RawatInap::with('dokter')->with('kamar')->get();
+        $data=RawatInap::with('dokter')->with('kamar')->where('selesai', 0)->get();
 
         foreach($data as $object){
             $object->status = "Belum Selesai";

@@ -5,7 +5,7 @@
 @include('components.loader')
 <div class="body table-responsive" style="min-height:500px">
     <div class="row-clearfix"></div>
-    <form action="{{url('dashboard/reports/filter')}}" method="post">
+    <form action="{{url('dashboard/reports/filter')}}" method="post" autocomplete="false">
     @csrf
         <div class="col-xs-6 margin-0">
             <h2 class="card-inside-title">Jangka Waktu</h2>
@@ -55,12 +55,12 @@
                 <th>{{$rawatInap->nama_pasien}}</th>
                 <th>{{$rawatInap->jenis_kelamin}}</th>
                 <th>{{$rawatInap->usia}}</th>
-                <th>{{$rawatInap->diagnosa_utama}}</th>
+                <th>{{$rawatInap->diagnosa->diagnosa}}</th>
                 <th>{{$rawatInap->tanggal_masuk}}</th>
                 <th>{{$rawatInap->tanggal_keluar}}</th>
                 <th>{{$rawatInap->lama_hari_rawat}}</th>
                 <th>{{$rawatInap->kamar->ruang_perawatan}}</th>
-                <th>{{($rawatInap->selesai==0)?"Masih di rawat":"Rawat Inap sudah selesai"}}</th>
+                <th>{{$rawatInap->status_keadaan_keluar}}</th>
             </tr>
             @empty
             <tr>
@@ -81,7 +81,7 @@
 <script>
     //Bootstrap datepicker plugin
     $('.input-daterange').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'dd-mm-yyyy',
         autoclose: true,
         container: '#bs_datepicker_range_container'
     });

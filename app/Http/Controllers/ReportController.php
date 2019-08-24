@@ -14,32 +14,33 @@ class ReportController extends Controller
     public function index()
     {
         $kamar=Kamar::all();
-        $data=RawatInap::with('dokter')->with('kamar')->orderBy('tanggal_masuk','desc')->get();
+        $data=RawatInap::with('dokter')->with('kamar')->with('diagnosa')
+            ->orderBy('tanggal_masuk','desc')->get();
         session()->flash('dataReports', $data);
         // dd($data);
+        foreach($data as $rm){
+            $rm->lama_hari_rawat = Carbon::parse($rm->tanggal_keluar)->diffInDays($rm->tanggal_masuk).' Hari';
+        }
+
         return view('dashboard.reports.index',compact('kamar','data'));
     }
 
     public function filter(Request $request)
     {
         $kamar=Kamar::all();
-        $tanggal['start']=Carbon::parse(strtotime($request->all()['start']));
-        $tanggal['end']=Carbon::parse(strtotime($request->all()['end']));
-        $request->merge($tanggal);
-        $request->validate([
-            'start' => 'required|date',
-            'end' => 'required|date',
-            'kamar_id' => 'required'
-        ]);
-        $start=$tanggal['start']->format('Y-m-d');
-        $end=$tanggal['end']->format('Y-m-d');
-        $data=RawatInap::with('dokter')->with('kamar')
+        $start=date('Y-m-d', strtotime($request->start));
+        $end=date('Y-m-d', strtotime($request->end));
+        $data=RawatInap::with('dokter')->with('kamar')->with('diagnosa')
         ->whereBetween('tanggal_masuk',[$start, $end])
         // ->where('tanggal_masuk','>=',$request->start)
         // ->where('tanggal_keluar','<=',$request->end)
         ->where('kamar_id',$request->kamar_id)
         ->orderBy('tanggal_masuk','desc')
         ->get();
+        
+        foreach($data as $rm){
+            $rm->lama_hari_rawat = Carbon::parse($rm->tanggal_keluar)->diffInDays($rm->tanggal_masuk).' Hari';
+        }
         session()->flash('dataReports', $data);
 
         return view('dashboard.reports.index',compact('kamar','data'));
