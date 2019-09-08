@@ -20,7 +20,7 @@ class CreateRawatInapsTable extends Migration
             $table->foreign('kamar_id')->references('kamar_id')->on('kamars')->onDelete('cascade');
             $table->string('nama_pasien');
             $table->string('usia');
-            $table->date('tanggal_lahir');
+            // $table->date('tanggal_lahir');
             $table->string('jenis_kelamin');
             $table->date('tanggal_masuk');
             $table->date('tanggal_keluar')->nullable();

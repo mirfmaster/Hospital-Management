@@ -27,14 +27,12 @@
     <table>
         <thead>
             <tr>
-                <th style="width:20%;padding: 0px;"> <img src="{{ public_path('images/logo.png') }}" style="height:13%;width: 12%; margin:0 0 0 3%"> </th>
+                <th style="width:20%;padding: 0px;"> <img src="{{ public_path('images/logo.png') }}"
+                        style="height:13%;width: 12%; margin:0 0 0 3%"> </th>
                 <th>
                     <br>
                     HOSPITAL MANAGEMENT <br>
                     Intergrated Hospital Management Based On Website <br> <br>
-                    <span style="font-size: 12px; font-weight: normal; text-align: center;">
-                        Victoria Street 3, UK, London
-                    </span>
                 </th>
             </tr>
         </thead>
@@ -43,36 +41,36 @@
 
     <table class="table" cellspacing="0">
         <tr>
-        <th>No RM</th>
-                <th>Nama Pasien</th>
-                <th>Jenis Kelamin</th>
-                <th>Usia</th>
-                <th>Diagnosa</th>
-                <th>Tanggal Masuk</th>
-                <th>Tanggal Keluar</th>
-                <th>Lama Rawat</th>
-                <th>Ruang Perawatan</th>
-                <th>Status</th>
+            <th>No RM</th>
+            <th>Nama Pasien</th>
+            <th>Jenis Kelamin</th>
+            <th>Usia</th>
+            <th>Diagnosa</th>
+            <th>Tanggal Masuk</th>
+            <th>Tanggal Keluar</th>
+            <th>Lama Rawat</th>
+            <th>Ruang Perawatan</th>
+            <th>Status</th>
         </tr>
         <tr>
-        @forelse($dataReports as $data)
-            <tr>
-                <th>{{$data->no_rm}}</th>
-                <th>{{$data->nama_pasien}}</th>
-                <th>{{$data->jenis_kelamin}}</th>
-                <th>{{$data->usia}}</th>
-                <th>{{$data->diagnosa_utama}}</th>
-                <th>{{$data->tanggal_masuk}}</th>
-                <th>{{$data->tanggal_keluar}}</th>
-                <th>{{$data->lama_hari_rawat}}</th>
-                <th>{{$data->kamar->ruang_perawatan}}</th>
-                <th>{{($data->status==0)?"Masih di rawat":"Rawat Inap sudah selesai"}}</th>
-            </tr>
-            @empty
-            <tr>
-                <td>Data laporan masih kosong</td>
-            </tr>
-            @endforelse
+            @forelse($dataReports as $data)
+        <tr>
+            <th>{{$data->no_rm}}</th>
+            <th>{{$data->nama_pasien}}</th>
+            <th>{{$data->jenis_kelamin}}</th>
+            <th>{{$data->usia}}</th>
+            <th>{{$data->diagnosa_utama}}</th>
+            <th>{{$data->tanggal_masuk}}</th>
+            <th>{{$data->tanggal_keluar}}</th>
+            <th>{{$data->lama_hari_rawat}}</th>
+            <th>{{$data->kamar->ruang_perawatan}}</th>
+            <th>{{($data->status==0)?"Masih di rawat":"Rawat Inap sudah selesai"}}</th>
+        </tr>
+        @empty
+        <tr>
+            <td>Data laporan masih kosong</td>
+        </tr>
+        @endforelse
         </tr>
     </table>
 </body>

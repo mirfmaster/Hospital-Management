@@ -8,7 +8,8 @@
     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-bordered table-striped table-hover js-basic-example dataTable" role="grid" aria-describedby="DataTables_Table_0_info" id="kamar-table">
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable" role="grid"
+                    aria-describedby="DataTables_Table_0_info" id="kamar-table">
                     <thead>
                         <tr role="row">
                             <th>No</th>
@@ -17,31 +18,47 @@
                             <th>Ruang Perawatan</th>
                             <th>Nama Dokter</th>
                             <th>Status</th>
-                            <th width="70">Actions</th>
+                            <th width="100">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($data as $rw)
-                            <tr valign="middle">
-                                <td></td>
-                                <td>{{$rw->nama_pasien}}</td>
-                                <td>{{$rw->tanggal_masuk}}</td>
-                                <td>{{$rw->kamar->ruang_perawatan}}</td>
-                                <td>{{$rw->dokter->nama_dokter}}</td>
-                                <td>{{$rw->status_keadaan_keluar}}</td>
-                                <td>
-                                    @if($rw->selesai!=1)
-                                        <a href="{{route('dashboard.rawatinap.edit',$rw->id)}}" title="Edit Data" class="btn btn-warning btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">edit</i></a>
-                                        <a href="{{route('dashboard.rawatinap.selesai',$rw->id)}}" title="Selesai" class="btn btn-primary btn-circle waves-effect waves-circle waves-float" style="float:left"><i class="material-icons" style="margin-top:3px;">done</i></a>
-                                    @else
-                                        <a class="btn btn-info">Sudah selesai :)</a>
-                                    @endif
-                                </td>
-                            </tr>
+                        <tr valign="middle">
+                            <td></td>
+                            <td>{{$rw->nama_pasien}}</td>
+                            <td>{{$rw->tanggal_masuk}}</td>
+                            <td>{{$rw->kamar->ruang_perawatan}}</td>
+                            <td>{{$rw->dokter->nama_dokter}}</td>
+                            <td>{{$rw->status_keadaan_keluar}}</td>
+                            <td>
+                                @if($rw->selesai!=1)
+                                <a href="{{route('dashboard.rawatinap.edit',$rw->id)}}" title="Edit Data"
+                                    class="btn btn-warning btn-circle waves-effect waves-circle waves-float"
+                                    style="float:left"><i class="material-icons" style="margin-top:3px;">edit</i>
+                                </a>
+                                <form action="{{route('dashboard.rawatinap.destroy', $rw->id)}}" method="post"
+                                    style="float:left">
+                                    <input type="hidden" name="created_at" value="{{ $rw->created_at }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit"
+                                        class="btn btn-danger btn-circle waves-effect waves-circle waves-float">
+                                        <i class="material-icons" style="margin-top:3px;">delete</i>
+                                    </button>
+                                </form>
+                                <a href="{{route('dashboard.rawatinap.selesai',$rw->id)}}" title="Selesai"
+                                    class="btn btn-primary btn-circle waves-effect waves-circle waves-float"
+                                    style="float:left"><i class="material-icons" style="margin-top:3px;">done</i>
+                                </a>
+                                @else
+                                <a class="btn btn-info">Sudah selesai :)</a>
+                                @endif
+                            </td>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="6" class="text-center">We do not found any data yet</td>
-                            </tr>
+                        <tr>
+                            <td colspan="6" class="text-center">We do not found any data yet</td>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -55,7 +72,7 @@
 
 @push('scripts')
 <script type="text/javascript">
-$(function() {
+    $(function() {
     var t = $('#kamar-table').DataTable({
         retrieve: true,
         dom: '<"col-md-6"l><"col-md-6"f><"col-md-12"rt><"col-md-6"i><"col-md-6"p>',
